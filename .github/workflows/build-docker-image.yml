@@ -36,14 +36,13 @@ jobs:
 
     - name: Build Docker
       run: |
-        docker build -t php:8-fpm-alpine -f 8.1/Dockerfile .
+        docker build -t php -f 8.1/Dockerfile .
 
     - name: Build & Push Multiarch Image
-      uses: docker/build-push-action@v2
-      with:
-        file: Dockerfile
-        context: .
-        push: true
-        tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/php:8-fpm-alpine
-          registry.cn-shenzhen.aliyuncs.com/${{ secrets.ALIYUN_NAMESPACES }}/php:8-fpm-alpine
+      run: |
+        docker image tag php ${{ secrets.DOCKERHUB_USERNAME }}/php:latest
+        docker image tag php ${{ secrets.DOCKERHUB_USERNAME }}/php:8-fpm-alpine
+        docker image tag php registry.cn-shenzhen.aliyuncs.com/${{ secrets.ALIYUN_NAMESPACES }}/php:latest
+        docker image tag php registry.cn-shenzhen.aliyuncs.com/${{ secrets.ALIYUN_NAMESPACES }}/php:8-fpm-alpine
+        docker image push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/php
+        docker image push --all-tags registry.cn-shenzhen.aliyuncs.com/${{ secrets.ALIYUN_NAMESPACES }}/php
