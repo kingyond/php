@@ -1,6 +1,10 @@
 name: php-fpm Docker Image
 
 on:
+  push:
+    branches:
+      - main
+      - 'releases/**'
   repository_dispatch:
   workflow_dispatch:
 #  schedule:
