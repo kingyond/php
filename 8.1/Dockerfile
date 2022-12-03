@@ -123,6 +123,3 @@ VOLUME /var/www/html
 
 RUN chown -R www-data:www-data /var/www
 
-ENTRYPOINT ["/entrypoint.sh"]
-
-CMD ["php-fpm"]
